@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.client.HttpClientErrorException;
 
-@Service
+@Service("prod")
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
-    public UsuarioService(@Qualifier("prod") UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 

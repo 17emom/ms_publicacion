@@ -2,7 +2,9 @@ package ar.com.uala.ms_publicacion.controller.rest;
 
 import ar.com.uala.ms_publicacion.domain.Publicacion;
 import ar.com.uala.ms_publicacion.service.PublicacionService;
+import ar.com.uala.ms_publicacion.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +17,14 @@ public class PublicacionController {
 
     @Autowired
     private PublicacionService publicacionService;
+    @Autowired
+    @Qualifier("prod")
+    private UsuarioService usuarioService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Publicacion crear(@PathVariable Long usuarioId, @RequestBody String textoPublicacion) {
-        return null;
+    public boolean crear(@PathVariable Long usuarioId, @RequestBody String textoPublicacion) {
+        return usuarioService.existePorId(usuarioId);
     }
 
     @GetMapping("/timeline")
