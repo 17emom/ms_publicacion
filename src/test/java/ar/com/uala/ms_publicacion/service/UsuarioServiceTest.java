@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 public class UsuarioServiceTest {
 
     @Autowired
-    @Qualifier("test")
+    @Qualifier("test-usuario")
     private UsuarioService usuarioService;
 
     @Test

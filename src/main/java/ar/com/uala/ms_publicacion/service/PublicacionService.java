@@ -13,7 +13,7 @@ public class PublicacionService {
     private final UsuarioService usuarioService;
     private static final int CANTIDAD_CARACTERES_LIMITE = 280;
 
-    public PublicacionService(PublicacionRepository publicacionRepository, @Qualifier("prod") UsuarioService usuarioService) {
+    public PublicacionService(PublicacionRepository publicacionRepository, @Qualifier("prod-usuario") UsuarioService usuarioService) {
         this.publicacionRepository = publicacionRepository;
         this.usuarioService = usuarioService;
     }

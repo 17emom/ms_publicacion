@@ -24,7 +24,7 @@ public class ServiceConfig {
     @Autowired
     private PublicacionRepository publicacionRepository;
 
-    @Bean("test")
+    @Bean("test-usuario")
     public UsuarioService usuarioServiceConRepoMockeado() {
         UsuarioRepository usuarioRepositoryMock = Mockito.mock(UsuarioRepository.class);
 
