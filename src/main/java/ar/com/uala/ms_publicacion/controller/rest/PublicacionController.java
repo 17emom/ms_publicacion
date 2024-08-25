@@ -1,9 +1,8 @@
 package ar.com.uala.ms_publicacion.controller.rest;
 
 import ar.com.uala.ms_publicacion.domain.Publicacion;
+import ar.com.uala.ms_publicacion.dto.ContenidoDto;
 import ar.com.uala.ms_publicacion.service.PublicacionService;
-import ar.com.uala.ms_publicacion.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +14,16 @@ import java.util.List;
 @RequestMapping("/api/v1/publicacion/{usuarioId}")
 public class PublicacionController {
 
-    @Autowired
-    private PublicacionService publicacionService;
-    @Autowired
-    @Qualifier("prod")
-    private UsuarioService usuarioService;
+    private final PublicacionService publicacionService;
+
+    public PublicacionController(@Qualifier("prod-publicacion") PublicacionService publicacionService) {
+        this.publicacionService = publicacionService;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public boolean crear(@PathVariable Long usuarioId, @RequestBody String textoPublicacion) {
-        return usuarioService.existePorId(usuarioId);
+    public Publicacion crear(@PathVariable Long usuarioId, @RequestBody ContenidoDto contenidoDto) {
+        return publicacionService.crear(usuarioId, contenidoDto.getContenido());
     }
 
     @GetMapping("/timeline")

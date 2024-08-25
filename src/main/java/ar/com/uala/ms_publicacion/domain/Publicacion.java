@@ -7,8 +7,7 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -20,5 +19,11 @@ public class Publicacion {
     private Long id;
     private String contenido;
     private Long usuarioId;
-    private LocalDate fechaCreacion;
+    private LocalDateTime fechaCreacion;
+
+    public Publicacion(Long usuarioId, String contenido) {
+        this.usuarioId = usuarioId;
+        this.contenido = contenido;
+        this.fechaCreacion = LocalDateTime.now();
+    }
 }

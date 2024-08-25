@@ -13,6 +13,6 @@ CREATE TABLE
         id BIGINT PRIMARY KEY AUTO_INCREMENT,
         usuario_id BIGINT,
         contenido VARCHAR(280),
-        fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        fecha_creacion TIMESTAMP,
         FOREIGN KEY (usuario_id) REFERENCES usuario (id)
     );
