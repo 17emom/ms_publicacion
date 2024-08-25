@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -145,7 +146,10 @@ public class PublicacionServiceTest {
 
     @Test
     public void obtenerTimeline_conUsuarioYPageableValidosConPublicaciones_retornaPaginadoConContenido() {
-        Publicacion publicacion = PublicacionBuilder.crear().conUsuarioId(2L).conContenido("test").conFechaCreacionAhora().buildAndPersist(em);
+        Long usuarioSeguidoId = 2L;
+        Publicacion publicacion1 = PublicacionBuilder.crear().conUsuarioId(usuarioSeguidoId).conContenido("test").conFechaCreacionAhora().buildAndPersist(em);
+        PublicacionBuilder.crear().conUsuarioId(usuarioSeguidoId).conContenido("test").conFechaCreacionAhora().buildAndPersist(em);
+        PublicacionBuilder.crear().conUsuarioId(usuarioSeguidoId).conContenido("test").conFechaCreacion(LocalDateTime.of(2023,5,17,5,3)).buildAndPersist(em);
 
         Page<Publicacion> paginado = publicacionService.obtenerTimeline(USUARIO_CREADO_ID, PAGEABLE);
 
@@ -153,12 +157,13 @@ public class PublicacionServiceTest {
                 .isNotZero();
         assertThat(paginado.getContent())
                 .isNotEmpty()
-                .hasSize(1)
+                .hasSize(3)
                 .allSatisfy(
                         (elemento) -> assertThat(elemento)
                                 .usingRecursiveComparison()
-                                .comparingOnlyFields("usuarioId", "contenido", "fechaCreacion")
-                                .isEqualTo(publicacion)
-                );
+                                .comparingOnlyFields("usuarioId")
+                                .isEqualTo(publicacion1)
+                )
+                .isSortedAccordingTo(Comparator.comparing(Publicacion::getFechaCreacion).reversed());
     }
 }
